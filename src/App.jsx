@@ -358,7 +358,7 @@ const LyricsModal = ({ isOpen, onClose, currentSongData, sources, handleExport }
     );
 };
 
-const ResultsPanel = ({ currentSongData, sources, error, handleExport }) => {
+const ResultsPanel = ({ currentSongData, sources, error, handleExport, openModal }) => {
     if (error) {
         return (
             <div className="p-4 bg-red-900/50 border border-red-700 rounded-3xl text-red-400 modular-card">
@@ -378,96 +378,18 @@ const ResultsPanel = ({ currentSongData, sources, error, handleExport }) => {
     }
 
     return (
-        <div className="space-y-6">
-            {/* Export Button */}
-            <div className="text-center">
-                <button 
-                    onClick={handleExport}
-                    className="px-6 py-3 bg-transparent text-amber-400 font-semibold rounded-2xl 
-                        border-2 border-amber-500 shadow-lg shadow-amber-900/50 flex items-center justify-center mx-auto
-                        hover:bg-amber-900/50 hover:text-amber-300 transition duration-200 ease-in-out"
-                >
-                    <Download className="w-5 h-5 mr-2" /> Export to Markdown (.md)
-                </button>
-            </div>
-
-            {/* 1. Title Card */}
-            <div className="bg-gradient-to-r from-amber-700 to-orange-800 text-white p-6 rounded-3xl shadow-xl shadow-amber-900/50">
-                <h2 className="text-4xl font-black mb-1">{currentSongData.title || 'Untitled Worship Song'}</h2>
-                <p className="text-xl text-amber-200">{currentSongData.theme || 'No theme specified'}</p>
-                {currentSongData.scripture_reference && (
-                    <p className="text-amber-300 text-sm italic mt-2 border-t border-amber-600/50 pt-2">Foundation: {currentSongData.scripture_reference}</p>
-                )}
-            </div>
-
-            {/* 2. Music Guidance Card */}
-            {(currentSongData.suggested_key || currentSongData.suggested_bpm || currentSongData.suggested_progression) && (
-                <div className="p-6 bg-gray-800 rounded-3xl modular-card">
-                    <h4 className="text-xl font-bold text-amber-400 mb-3 border-b border-amber-900 pb-2 flex items-center"><Music className="w-5 h-5 mr-2" /> Musical Core</h4>
-                    <div className="flex flex-wrap justify-between items-center text-lg font-extrabold">
-                        <p className="text-gray-300">Key: <span className="text-white">{currentSongData.suggested_key || 'N/A'}</span></p>
-                        <p className="text-gray-300">BPM: <span className="text-white">{currentSongData.suggested_bpm || 'N/A'}</span></p>
-                    </div>
-                    <div className="mt-3 text-lg font-extrabold p-3 bg-gray-900 rounded-xl border border-gray-700">
-                        <p className="text-gray-300">Progression: <span className="text-amber-300">{currentSongData.suggested_progression || 'N/A'}</span></p>
-                    </div>
-                </div>
-            )}
-
-            {/* 3. Lyrical Analysis Card */}
-            {currentSongData.lyrical_analysis && (
-                <div className="p-6 bg-gray-800 rounded-3xl modular-card">
-                    <h4 className="text-xl font-bold text-amber-400 mb-3 border-b border-amber-900 pb-2 flex items-center"><Feather className="w-5 h-5 mr-2" /> Lyrical Analysis & Polish ✨</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                        <div className="p-3 bg-gray-900 rounded-xl border border-gray-700">
-                            <p className="text-sm text-gray-400">Rhyme Scheme:</p>
-                            <p className="text-lg font-bold text-white">{currentSongData.lyrical_analysis.rhyme_scheme || 'N/A'}</p>
-                        </div>
-                        <div className="p-3 bg-gray-900 rounded-xl border border-gray-700">
-                            <p className="text-sm text-gray-400">Complexity:</p>
-                            <p className="text-lg font-bold text-white">{currentSongData.lyrical_analysis.complexity_rating || 'N/A'}</p>
-                        </div>
-                        <div className="p-3 bg-gray-900 rounded-xl border border-gray-700 md:col-span-3">
-                            <p className="text-sm text-gray-400 mb-1">Meter & Flow Critique:</p>
-                            <p className="text-base text-gray-300">{currentSongData.lyrical_analysis.meter_and_flow_critique || 'N/A'}</p>
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {/* 4. Lyrics Sections */}
-            {currentSongData.sections && currentSongData.sections.map((section, index) => {
-                const isRevision = section.type === 'Revision';
-                const sectionClasses = isRevision 
-                    ? "p-6 bg-orange-950/40 rounded-3xl border-2 border-orange-700 shadow-md"
-                    : "p-6 bg-gray-800 rounded-3xl modular-card";
-                const typeColor = isRevision ? "text-orange-400" : "text-gray-200";
-
-                return (
-                    <div key={index} className={sectionClasses}>
-                        <div className="flex justify-between items-center mb-4 border-b pb-2 border-amber-900">
-                            <h3 className={`text-2xl font-bold ${typeColor}`}>{section.type}</h3>
-                        </div>
-                        <pre className="whitespace-pre-wrap text-lg text-gray-300 leading-relaxed">{section.lyrics}</pre>
-                    </div>
-                );
-            })}
-
-            {/* 5. Citations */}
-            {sources.length > 0 ? (
-                <div className="p-6 bg-gray-800 rounded-3xl modular-card">
-                    <h3 className="text-xl font-semibold text-gray-400 mb-3 border-b border-amber-900 pb-2 flex items-center"><BookOpen className="w-5 h-5 mr-2" /> Scriptural Grounding Sources</h3>
-                    <ul className="list-disc list-inside text-sm text-gray-500 space-y-1">
-                        {sources.map((s, index) => (
-                            <li key={index}><a href={s.uri} target="_blank" rel="noopener noreferrer" className="hover:text-amber-400 underline">{s.title || s.uri}</a></li>
-                        ))}
-                    </ul>
-                </div>
-            ) : currentSongData.title && (
-                <div className="p-6 bg-gray-800 rounded-3xl modular-card">
-                    <p className="text-sm text-gray-500">Note: Scriptural references were generated based on internal knowledge and the prompt.</p>
-                </div>
-            )}
+        <div className="text-center p-12 bg-gray-800 rounded-3xl modular-card">
+            <Music className="w-16 h-16 mx-auto mb-4 text-amber-500" />
+            <h3 className="text-3xl font-bold text-amber-400 mb-2">{currentSongData.title || 'Untitled Song'}</h3>
+            <p className="text-lg text-gray-400 mb-6">{currentSongData.theme || 'No theme specified'}</p>
+            <button
+                onClick={openModal}
+                className="px-8 py-4 bg-transparent text-amber-400 font-semibold text-xl rounded-3xl
+                    border-2 border-amber-500 shadow-xl shadow-amber-900/50
+                    hover:bg-amber-900/50 hover:text-amber-300 transition duration-200 ease-in-out transform hover:scale-105"
+            >
+                View Song
+            </button>
         </div>
     );
 };
