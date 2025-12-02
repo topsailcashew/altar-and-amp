@@ -409,6 +409,13 @@ const App = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    // Auto-open modal when song data is set
+    React.useEffect(() => {
+        if (currentSongData && !isModalOpen) {
+            setIsModalOpen(true);
+        }
+    }, [currentSongData]);
+
     // Export Handler using the data from the hook
     const handleExport = useCallback(() => {
         if (!currentSongData) return;
@@ -524,13 +531,22 @@ const App = () => {
                     {isLoading && <LoadingIndicator />}
                     
                     <div id="results" className="space-y-6">
-                        <ResultsPanel 
-                            currentSongData={currentSongData} 
-                            sources={sources} 
-                            error={error} 
-                            handleExport={handleExport} 
+                        <ResultsPanel
+                            currentSongData={currentSongData}
+                            sources={sources}
+                            error={error}
+                            handleExport={handleExport}
+                            openModal={() => setIsModalOpen(true)}
                         />
                     </div>
+
+                    <LyricsModal
+                        isOpen={isModalOpen}
+                        onClose={() => setIsModalOpen(false)}
+                        currentSongData={currentSongData}
+                        sources={sources}
+                        handleExport={handleExport}
+                    />
                 </main>
             </div>
         </div>
