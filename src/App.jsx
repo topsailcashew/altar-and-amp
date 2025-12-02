@@ -414,7 +414,7 @@ const App = () => {
         if (currentSongData && !isModalOpen) {
             setIsModalOpen(true);
         }
-    }, [currentSongData]);
+    }, [currentSongData, isModalOpen]);
 
     // Export Handler using the data from the hook
     const handleExport = useCallback(() => {
