@@ -64,8 +64,11 @@ const WaveformCanvas = ({
       const rect = canvas.getBoundingClientRect();
       ctx.clearRect(0, 0, rect.width, rect.height);
 
+      // Reduce bar count on mobile
+      const responsiveBarCount = rect.width < 640 ? Math.min(barCount, 3) : barCount;
+
       if (variant === 'bars') {
-        drawBars(ctx, rect, elapsed, barCount, amplitude, speed, color);
+        drawBars(ctx, rect, elapsed, responsiveBarCount, amplitude, speed, color);
       } else if (variant === 'sine') {
         drawSineWave(ctx, rect, elapsed, amplitude, speed, color);
       } else if (variant === 'pulse') {
