@@ -103,6 +103,8 @@ const WaveformCanvas = ({
       ref={canvasRef}
       className={`w-full h-full ${className}`}
       style={{ willChange: 'transform' }}
+      aria-hidden="true"
+      role="presentation"
     />
   );
 };

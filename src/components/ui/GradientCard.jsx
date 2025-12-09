@@ -49,6 +49,7 @@ const GradientCard = ({
           0 0 1px 1px rgba(255, 255, 255, 0.1) inset
         `,
       }}
+      role="article"
       {...props}
     >
       {/* Bottom glow effect */}
