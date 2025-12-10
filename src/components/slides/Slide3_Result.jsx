@@ -9,10 +9,10 @@ const Slide3_Result = ({ songData, isLoading, error, onStartOver }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
-        if (songData && !isModalOpen) {
+        if (songData) {
             setIsModalOpen(true);
         }
-    }, [songData, isModalOpen]);
+    }, [songData]);
 
     return (
         <div className="relative flex flex-col items-center justify-center h-full p-8 overflow-y-auto bg-gray-950 overflow-x-hidden">
