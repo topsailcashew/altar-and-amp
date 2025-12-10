@@ -71,8 +71,16 @@ const App = () => {
         setError(null);
         setCurrentSongData(null);
 
-        // TODO: Create a more sophisticated prompt with the tags
-        const finalUserQuery = `Write a song about ${conceptPrompt}. The song should be ${toneFilter} and have a ${structureFilter} structure.`;
+        // Build comprehensive prompt with worship music style guidelines
+        const styleGuidelines = `Write in the style of contemporary worship music, employing accessible language to focus on God's power, grace, and a personal relationship with Him. Use experiential, emotional language to describe Holy Spirit encounter, incorporating vivid imagery (like fire, water, light, and heights) to convey the feeling of God's presence and spiritual revival. Blend theological depth with accessible declarations, focusing on God's attributes and the victory of Jesus. Utilize anthemic, universal language and poetic metaphors to capture the struggles and hope of the modern believer, centering on themes of surrender and God's unmatched glory. Move the worshipper from intellectual belief to a passionate, declarative, and emotional response to God's nature and actions.`;
+
+        const tagsContext = tags.length > 0 ? ` Include themes related to: ${tags.join(', ')}.` : '';
+
+        const finalUserQuery = `Write a contemporary worship song about ${conceptPrompt}. The song should be ${toneFilter} in tone and have a ${structureFilter} structure.${tagsContext}
+
+${styleGuidelines}
+
+Create lyrics that are singable, memorable, and suitable for congregational worship.`;
 
         const payload = {
             contents: [{ parts: [{ text: finalUserQuery }] }],
@@ -105,7 +113,7 @@ const App = () => {
         } finally {
             setIsLoading(false);
         }
-    }, [conceptPrompt, toneFilter, structureFilter, swiper]);
+    }, [conceptPrompt, toneFilter, structureFilter, tags, swiper]);
     
     return (
         <ThemeProvider currentSlide={currentSlide}>
