@@ -35,6 +35,9 @@ const AnimatedBackground = ({ theme = 'blue-purple', intensity = 'subtle' }) => 
         style={{
           background: gradients.gradient1,
           animation: `gradient-mesh-1 ${duration} ease-in-out infinite`,
+          willChange: 'transform, opacity',
+          backfaceVisibility: 'hidden',
+          transform: 'translateZ(0)',
         }}
       />
       <div
@@ -43,6 +46,9 @@ const AnimatedBackground = ({ theme = 'blue-purple', intensity = 'subtle' }) => 
           background: gradients.gradient2,
           animation: `gradient-mesh-2 ${duration} ease-in-out infinite`,
           animationDelay: `${parseFloat(duration) / 3}s`,
+          willChange: 'transform, opacity',
+          backfaceVisibility: 'hidden',
+          transform: 'translateZ(0)',
         }}
       />
       <div
@@ -51,6 +57,9 @@ const AnimatedBackground = ({ theme = 'blue-purple', intensity = 'subtle' }) => 
           background: gradients.gradient3,
           animation: `gradient-mesh-3 ${duration} ease-in-out infinite`,
           animationDelay: `${parseFloat(duration) / 2}s`,
+          willChange: 'transform, opacity',
+          backfaceVisibility: 'hidden',
+          transform: 'translateZ(0)',
         }}
       />
     </div>
