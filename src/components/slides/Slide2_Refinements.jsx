@@ -19,7 +19,7 @@ const Slide2_Refinements = ({ tone, setTone, structure, setStructure, tags, setT
     };
 
     return (
-        <div className="relative flex flex-col items-center justify-center h-full p-8 overflow-y-auto">
+        <div className="relative flex flex-col items-center justify-center h-full p-8 overflow-y-auto bg-gray-950">
             {/* Animated background */}
             <AnimatedBackground theme="purple-pink" intensity="subtle" />
 

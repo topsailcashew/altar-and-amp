@@ -15,7 +15,7 @@ const Slide3_Result = ({ songData, isLoading, error, onStartOver }) => {
     }, [songData, isModalOpen]);
 
     return (
-        <div className="relative flex flex-col items-center justify-center h-full p-8 overflow-y-auto">
+        <div className="relative flex flex-col items-center justify-center h-full p-8 overflow-y-auto bg-gray-950">
             {/* Animated background */}
             <AnimatedBackground theme="orange-green" intensity="subtle" />
 
