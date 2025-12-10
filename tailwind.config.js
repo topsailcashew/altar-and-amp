@@ -49,7 +49,7 @@ export default {
       animation: {
         'sound-wave': 'sound-wave 1.2s infinite ease-in-out',
         'gradient-shift': 'gradient-shift 15s ease infinite',
-        'border-pulse': 'border-pulse 2s ease infinite',
+        'border-pulse': 'border-pulse 3s ease-in-out infinite',
       },
     },
   },

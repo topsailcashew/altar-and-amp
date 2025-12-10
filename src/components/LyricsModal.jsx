@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
-import { X } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { X, Copy, Check } from 'lucide-react';
 import GlassContainer from './ui/GlassContainer';
 import WaveformCanvas from './ui/WaveformCanvas';
 
 const LyricsModal = ({ isOpen, onClose, songData }) => {
+    const [copied, setCopied] = useState(false);
+
     useEffect(() => {
         const handleEscape = (e) => {
             if (e.key === 'Escape') onClose();
@@ -23,6 +25,22 @@ const LyricsModal = ({ isOpen, onClose, songData }) => {
     if (!isOpen || !songData) return null;
 
     const { title, sections } = songData;
+
+    const handleCopy = async () => {
+        const lyricsText = sections
+            .map(section => `[${section.type.toUpperCase()}]\n${section.lyrics}`)
+            .join('\n\n');
+
+        const fullText = `${title}\n\n${lyricsText}`;
+
+        try {
+            await navigator.clipboard.writeText(fullText);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch (err) {
+            console.error('Failed to copy:', err);
+        }
+    };
 
     return (
         <div
@@ -45,29 +63,46 @@ const LyricsModal = ({ isOpen, onClose, songData }) => {
                 onClick={(e) => e.stopPropagation()}
             >
                 <GlassContainer tint="green" blur="heavy" className="relative">
-                    {/* Close button */}
-                    <button
-                        onClick={onClose}
-                        className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-400"
-                        aria-label="Close modal"
-                    >
-                        <X className="w-6 h-6 text-white" />
-                    </button>
+                    {/* Header buttons */}
+                    <div className="absolute top-4 right-4 flex gap-2">
+                        {/* Copy button */}
+                        <button
+                            onClick={handleCopy}
+                            className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-400"
+                            aria-label="Copy lyrics"
+                            title="Copy lyrics to clipboard"
+                        >
+                            {copied ? (
+                                <Check className="w-6 h-6 text-green-400" />
+                            ) : (
+                                <Copy className="w-6 h-6 text-white" />
+                            )}
+                        </button>
+
+                        {/* Close button */}
+                        <button
+                            onClick={onClose}
+                            className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-400"
+                            aria-label="Close modal"
+                        >
+                            <X className="w-6 h-6 text-white" />
+                        </button>
+                    </div>
 
                     {/* Title */}
-                    <h1 className="text-4xl font-bold text-white mb-8 pr-12">{title}</h1>
+                    <h1 className="text-4xl font-bold text-white mb-8 pr-24">{title}</h1>
 
                     {/* Lyrics sections */}
-                    <div className="overflow-y-auto max-h-[calc(90vh-200px)] pr-4 space-y-6">
+                    <div className="overflow-y-auto max-h-[calc(90vh-200px)] pr-4 space-y-8">
                         {sections?.map((section, index) => (
                             <div
                                 key={index}
-                                className="pb-6 border-b border-white/10 last:border-b-0"
+                                className="pb-8 border-b border-white/10 last:border-b-0"
                             >
-                                <p className="text-green-300 font-bold mb-3 uppercase tracking-wide">
+                                <p className="text-green-300 font-bold mb-4 uppercase tracking-wide text-sm">
                                     {section.type}
                                 </p>
-                                <p className="text-white text-lg whitespace-pre-line leading-relaxed">
+                                <p className="text-white text-lg whitespace-pre-line leading-loose">
                                     {section.lyrics}
                                 </p>
                             </div>

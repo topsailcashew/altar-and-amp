@@ -15,7 +15,7 @@ const Slide1_Concept = ({ concept, setConcept, onNext }) => {
     }, []);
 
     return (
-        <div className="relative flex flex-col items-center justify-center h-full text-white p-8 bg-gray-950">
+        <div className="relative flex flex-col items-center justify-center h-full text-white p-8 bg-gray-950 overflow-hidden">
             {/* Animated gradient background */}
             <AnimatedBackground theme="blue-purple" intensity="subtle" />
 

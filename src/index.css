@@ -62,6 +62,15 @@ body {
   }
 }
 
+@keyframes border-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(219, 39, 119, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(219, 39, 119, 0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   @keyframes gradient-mesh-1,
   @keyframes gradient-mesh-2,
@@ -69,6 +78,12 @@ body {
     0%, 100% {
       transform: none;
       opacity: 0.5;
+    }
+  }
+
+  @keyframes border-pulse {
+    0%, 100% {
+      box-shadow: none;
     }
   }
 }
