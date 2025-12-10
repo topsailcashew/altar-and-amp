@@ -67,7 +67,10 @@ const LyricsModal = ({ isOpen, onClose, songData }) => {
                     <div className="absolute top-4 right-4 flex gap-2">
                         {/* Copy button */}
                         <button
-                            onClick={handleCopy}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                handleCopy();
+                            }}
                             className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-400"
                             aria-label="Copy lyrics"
                             title="Copy lyrics to clipboard"
@@ -81,7 +84,10 @@ const LyricsModal = ({ isOpen, onClose, songData }) => {
 
                         {/* Close button */}
                         <button
-                            onClick={onClose}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onClose();
+                            }}
                             className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-400"
                             aria-label="Close modal"
                         >
