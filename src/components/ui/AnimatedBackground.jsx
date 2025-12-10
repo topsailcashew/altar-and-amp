@@ -29,35 +29,35 @@ const AnimatedBackground = ({ theme = 'blue-purple', intensity = 'subtle' }) => 
   const duration = intensityDurations[intensity] || intensityDurations.subtle;
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div className="absolute inset-0 overflow-hidden pointer-events-none bg-gray-950">
       <div
-        className="absolute w-full h-full"
+        className="absolute inset-[-20%]"
         style={{
           background: gradients.gradient1,
           animation: `gradient-mesh-1 ${duration} ease-in-out infinite`,
-          willChange: 'transform, opacity',
+          willChange: 'transform',
           backfaceVisibility: 'hidden',
           transform: 'translateZ(0)',
         }}
       />
       <div
-        className="absolute w-full h-full"
+        className="absolute inset-[-20%]"
         style={{
           background: gradients.gradient2,
           animation: `gradient-mesh-2 ${duration} ease-in-out infinite`,
           animationDelay: `${parseFloat(duration) / 3}s`,
-          willChange: 'transform, opacity',
+          willChange: 'transform',
           backfaceVisibility: 'hidden',
           transform: 'translateZ(0)',
         }}
       />
       <div
-        className="absolute w-full h-full"
+        className="absolute inset-[-20%]"
         style={{
           background: gradients.gradient3,
           animation: `gradient-mesh-3 ${duration} ease-in-out infinite`,
           animationDelay: `${parseFloat(duration) / 2}s`,
-          willChange: 'transform, opacity',
+          willChange: 'transform',
           backfaceVisibility: 'hidden',
           transform: 'translateZ(0)',
         }}

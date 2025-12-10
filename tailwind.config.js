@@ -25,7 +25,7 @@ export default {
         'teal-500': '#14b8a6',
       },
       fontFamily: {
-        sans: ['Inter', ...fontFamily.sans],
+        sans: ['Space Grotesk', ...fontFamily.sans],
       },
       borderRadius: {
         '4xl': '2rem',
